@@ -1,0 +1,18 @@
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+select, button {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+}
+
+#result {
+  background: white;
+  padding: 10px;
+  margin-top: 15px;
+}
