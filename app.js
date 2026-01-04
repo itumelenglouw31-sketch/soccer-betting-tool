@@ -62,46 +62,52 @@ leagueSelect.onchange = loadTeams;
 loadTeams();
 
 function analyze() {
-  const stake = 100; // default stake
-  const confidence = Math.floor(Math.random()*4)+7; // 7-10
-  const corners = Math.floor(Math.random()*6)+7; // 7-12
-  const cards = Math.floor(Math.random()*4)+2; // 2-5
-  const btts = Math.random() > 0.4 ? "Yes" : "No";
+  const confWin = Number(document.getElementById("confWin").value);
+  const confDouble = Number(document.getElementById("confDouble").value);
+  const confOver = Number(document.getElementById("confOver").value);
+  const confBTTS = Number(document.getElementById("confBTTS").value);
+  const confCorners = Number(document.getElementById("confCorners").value);
+  const confCards = Number(document.getElementById("confCards").value);
+  const stake = 100;
 
   result.innerHTML = `
     <h3>${teamA.value} vs ${teamB.value}</h3>
-    <p>Straight Win: ${confidence>=9?teamA.value:"Tight Game"}</p>
-    <p>Double Chance: ${confidence>=7?"12":"1X"}</p>
-    <p>Over 1.5 Goals: YES</p>
-    <p>BTTS: ${btts}</p>
-    <p>Corners: ${corners}</p>
-    <p>Cards: ${cards}</p>
+    <p>Straight Win: ${teamA.value} (${confWin}%)</p>
+    <p>Double Chance: 1X (${confDouble}%)</p>
+    <p>Over 1.5 Goals: YES (${confOver}%)</p>
+    <p>BTTS: ${confBTTS}%</p>
+    <p>Corners: ${confCorners}%</p>
+    <p>Cards: ${confCards}%</p>
     <p>Stake Suggestion: R${stake}</p>
-    <strong>Confidence Score: ${confidence}/10</strong>
   `;
 }
 
-function preset(type) {
-  let stake, confidence, corners, cards, btts;
-
-  switch(type) {
+function preset(type){
+  switch(type){
     case "Quick Pick":
-      stake = 50; confidence = 7; corners=8; cards=3; btts="Yes"; break;
+      document.getElementById("confWin").value = 80;
+      document.getElementById("confDouble").value = 70;
+      document.getElementById("confOver").value = 90;
+      document.getElementById("confBTTS").value = 60;
+      document.getElementById("confCorners").value = 50;
+      document.getElementById("confCards").value = 40;
+      break;
     case "Value Bet":
-      stake = 100; confidence = 8; corners=9; cards=4; btts="Yes"; break;
+      document.getElementById("confWin").value = 85;
+      document.getElementById("confDouble").value = 75;
+      document.getElementById("confOver").value = 95;
+      document.getElementById("confBTTS").value = 70;
+      document.getElementById("confCorners").value = 55;
+      document.getElementById("confCards").value = 45;
+      break;
     case "High Confidence":
-      stake = 150; confidence = 9; corners=10; cards=4; btts="Yes"; break;
+      document.getElementById("confWin").value = 90;
+      document.getElementById("confDouble").value = 85;
+      document.getElementById("confOver").value = 95;
+      document.getElementById("confBTTS").value = 80;
+      document.getElementById("confCorners").value = 60;
+      document.getElementById("confCards").value = 50;
+      break;
   }
-
-  result.innerHTML = `
-    <h3>${teamA.value} vs ${teamB.value} (${type})</h3>
-    <p>Straight Win: ${confidence>=9?teamA.value:"Tight Game"}</p>
-    <p>Double Chance: ${confidence>=7?"12":"1X"}</p>
-    <p>Over 1.5 Goals: YES</p>
-    <p>BTTS: ${btts}</p>
-    <p>Corners: ${corners}</p>
-    <p>Cards: ${cards}</p>
-    <p>Stake Suggestion: R${stake}</p>
-    <strong>Confidence Score: ${confidence}/10</strong>
-  `;
-}
+  analyze();
+    }
